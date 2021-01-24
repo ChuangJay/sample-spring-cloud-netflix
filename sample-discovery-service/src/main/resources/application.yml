@@ -4,7 +4,12 @@ spring:
 
 server:  
   port: ${PORT:8761}
-      
+#  ssl:
+#    key-store: classpath:keystore.p12
+#    key-store-password: 123456
+#    keyStoreType: PKCS12
+#    keyAlias: discovery
+
 eureka:
   client:
     registerWithEureka: false
@@ -12,3 +17,11 @@ eureka:
   server:
     enableSelfPreservation: true
     evictionIntervalTimerInMs: 30000
+    responseCacheUpdateIntervalMs: 3000
+
+security:
+ basic:
+   enabled: true
+ user:
+   name: admin
+   password: admin123

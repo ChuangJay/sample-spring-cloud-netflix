@@ -1,17 +1,35 @@
 spring:  
   application:
     name: client-service
-
+  cloud:
+    inetutils:      
+       preferredNetworks:        
+         - 10.211
 server:  
-  port: ${PORT:8081}
-
+  port: 808${SEQUENCE_NO}
+  ssl:
+    key-store: classpath:keystore.p12
+    key-store-password: 123456
+    keyStoreType: PKCS12
+    keyAlias: client
 eureka:
   client:
     serviceUrl:
-      defaultZone: ${EUREKA_URL:http://localhost:8761/eureka/}
+      defaultZone: ${EUREKA_URL:http://admin:admin123@localhost:8761/eureka/}
+    registryFetchIntervalSeconds: 3
+    shouldDisableDelta: true
 #  instance:
 #    leaseRenewalIntervalInSeconds: 1     
 #    leaseExpirationDurationInSeconds: 2
+  instance:
+    instanceId: ${spring.application.name}-${SEQUENCE_NO}
+    securePortEnabled: true
+    nonSecurePortEnabled: false
+    statusPageUrl: https://${eureka.hostname}:${server.port}/info
+    healthCheckUrl: https://${eureka.hostname}:${server.port}/health
+    homePageUrl: https://${eureka.hostname}:${server.port}/
+   
+   
    
 endpoints:
   shutdown:
